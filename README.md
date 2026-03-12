@@ -77,13 +77,6 @@ Müsahibədə ən çox uğur gətirən şey: sualın cavabını bilməsən belə
 
 ---
 
-## Fayl strukturu
 
-```
-📄 js_interview_questions.html   ← İnteraktiv axtarış interfeysi
-📄 README.md                     ← Bu fayl
-```
 
----
-
-Uğurlar! 🚀
+Uğurlar! 
