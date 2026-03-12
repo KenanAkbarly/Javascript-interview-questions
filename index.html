@@ -1,0 +1,3993 @@
+<!doctype html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Interview Sualları — Middle/Senior</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@400;500;600;700&display=swap");
+
+      :root {
+        --bg: #0e0e10;
+        --bg2: #161618;
+        --bg3: #1e1e22;
+        --border: rgba(255, 255, 255, 0.07);
+        --text: #e8e6e0;
+        --muted: #7a7870;
+        --accent: #c8f464;
+        --accent2: #f4a64a;
+        --accent3: #6479f4;
+        --red: #f46464;
+        --pill-bg: rgba(255, 255, 255, 0.05);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Syne", sans-serif;
+        min-height: 100vh;
+        line-height: 1.5;
+      }
+
+      .header {
+        padding: 32px 32px 24px;
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        background: var(--bg);
+        z-index: 100;
+      }
+
+      .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .logo {
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .logo span {
+        color: var(--accent);
+      }
+
+      .stats {
+        display: flex;
+        gap: 16px;
+        font-size: 12px;
+        font-family: "JetBrains Mono", monospace;
+        color: var(--muted);
+      }
+      .stats b {
+        color: var(--text);
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      input[type="text"] {
+        background: var(--bg2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-family: "Syne", sans-serif;
+        font-size: 13px;
+        outline: none;
+        width: 260px;
+        transition: border-color 0.2s;
+      }
+      input[type="text"]:focus {
+        border-color: var(--accent);
+      }
+      input[type="text"]::placeholder {
+        color: var(--muted);
+      }
+
+      select {
+        background: var(--bg2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-family: "Syne", sans-serif;
+        font-size: 13px;
+        outline: none;
+        cursor: pointer;
+        appearance: none;
+        padding-right: 28px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237a7870' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+      }
+      select:focus {
+        border-color: var(--accent);
+      }
+
+      .btn-filter {
+        padding: 8px 14px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--pill-bg);
+        color: var(--muted);
+        font-family: "Syne", sans-serif;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .btn-filter:hover {
+        border-color: rgba(255, 255, 255, 0.2);
+        color: var(--text);
+      }
+      .btn-filter.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #0e0e10;
+        font-weight: 600;
+      }
+
+      .main {
+        padding: 0 32px 32px;
+      }
+
+      .section {
+        margin-top: 28px;
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        user-select: none;
+      }
+      .section-title {
+        font-size: 13px;
+        font-weight: 600;
+        font-family: "JetBrains Mono", monospace;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        transition: color 0.2s;
+      }
+      .section-header:hover .section-title {
+        color: var(--text);
+      }
+      .section-line {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+      .section-count {
+        font-size: 11px;
+        font-family: "JetBrains Mono", monospace;
+        color: var(--muted);
+      }
+      .section-toggle {
+        font-size: 10px;
+        color: var(--muted);
+        transition: transform 0.2s;
+      }
+      .section-toggle.collapsed {
+        transform: rotate(-90deg);
+      }
+
+      .q-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .q-grid.collapsed {
+        display: none;
+      }
+
+      .q-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 11px 14px;
+        border-radius: 8px;
+        background: var(--bg2);
+        border: 1px solid transparent;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        cursor: default;
+      }
+      .q-row:hover {
+        border-color: var(--border);
+        background: var(--bg3);
+      }
+      .q-row.hidden {
+        display: none;
+      }
+
+      .q-num {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: var(--muted);
+        min-width: 28px;
+        padding-top: 2px;
+      }
+
+      .q-text {
+        flex: 1;
+        font-size: 14px;
+        color: var(--text);
+        line-height: 1.55;
+      }
+
+      .q-star {
+        font-size: 11px;
+        color: var(--accent2);
+        padding-top: 3px;
+      }
+
+      .q-prob {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 6px;
+        white-space: nowrap;
+        align-self: flex-start;
+        margin-top: 1px;
+      }
+
+      .prob-critical {
+        background: rgba(244, 100, 100, 0.15);
+        color: #f49090;
+      }
+      .prob-high {
+        background: rgba(244, 166, 74, 0.15);
+        color: #f4c074;
+      }
+      .prob-medium {
+        background: rgba(100, 121, 244, 0.15);
+        color: #90a0f4;
+      }
+      .prob-low {
+        background: rgba(122, 120, 112, 0.1);
+        color: var(--muted);
+      }
+
+      .no-results {
+        text-align: center;
+        padding: 60px;
+        color: var(--muted);
+        font-size: 14px;
+        display: none;
+      }
+      .no-results.show {
+        display: block;
+      }
+
+      .topic-tag {
+        font-size: 10px;
+        font-family: "JetBrains Mono", monospace;
+        color: var(--muted);
+        background: var(--pill-bg);
+        padding: 1px 6px;
+        border-radius: 4px;
+        margin-top: 3px;
+        display: inline-block;
+      }
+
+      @media (max-width: 600px) {
+        .header {
+          padding: 16px;
+        }
+        .main {
+          padding: 0 16px 32px;
+        }
+        input[type="text"] {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-top">
+        <div class="logo">JS Interview <span>Sualları</span></div>
+        <div class="stats">
+          <span>Cəmi: <b id="total-count">0</b></span>
+          <span>Göstərilən: <b id="shown-count">0</b></span>
+          <span>≥40%: <b id="high-count">0</b></span>
+        </div>
+      </div>
+      <div class="controls">
+        <input
+          type="text"
+          id="search"
+          placeholder="Axtar... (məs: closure, this, async)"
+        />
+        <select id="sort-select">
+          <option value="prob">Ehtimala görə ↓</option>
+          <option value="num">Nömrəyə görə</option>
+          <option value="topic">Mövzuya görə</option>
+        </select>
+        <button class="btn-filter active" data-filter="all">Hamısı</button>
+        <button class="btn-filter" data-filter="40">≥40%</button>
+        <button class="btn-filter" data-filter="60">≥60%</button>
+        <button class="btn-filter" data-filter="75">≥75%</button>
+        <button class="btn-filter" data-filter="star">★ İşarəli</button>
+      </div>
+    </div>
+
+    <div class="main">
+      <div id="container"></div>
+      <div class="no-results" id="no-results">Heç nə tapılmadı</div>
+    </div>
+
+    <script>
+      const questions = [
+        // ─── 1. JavaScript Əsasları ───────────────────────────────────
+        {
+          num: 1,
+          q: "Who created JavaScript and when?",
+          topic: "JS Əsaslar",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 2,
+          q: "Is there any relation between Java and JavaScript?",
+          topic: "JS Əsaslar",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 3,
+          q: "Is JavaScript a compiled or interpreted language?",
+          topic: "JS Əsaslar",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 4,
+          q: "Is JavaScript a case-sensitive language?",
+          topic: "JS Əsaslar",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 5,
+          q: "What paradigm is JavaScript?",
+          topic: "JS Əsaslar",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 6,
+          q: "Why is JavaScript treated as Single threaded?",
+          topic: "JS Əsaslar",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 7,
+          q: "What is ECMAScript?",
+          topic: "JS Əsaslar",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 8,
+          q: "What is ES6?",
+          topic: "JS Əsaslar",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 9,
+          q: "List down some of the features of ES6.",
+          topic: "JS Əsaslar",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 10,
+          q: "Why do we call JavaScript as a dynamic language?",
+          topic: "JS Əsaslar",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 11,
+          q: "What is V8 JavaScript engine?",
+          topic: "JS Əsaslar",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 12,
+          q: "Is JavaScript faster than server side script?",
+          topic: "JS Əsaslar",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 13,
+          q: "What is NodeJS?",
+          topic: "JS Əsaslar",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 14,
+          q: "What is the difference between internal and external JavaScript?",
+          topic: "JS Əsaslar",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 15,
+          q: "What is the difference between JavaScript and TypeScript?",
+          topic: "TypeScript",
+          star: true,
+          prob: 65,
+        },
+        // ─── 2. Dəyişənlər, Tiplər ───────────────────────────────────
+        {
+          num: 16,
+          q: "What are primitive data types in JavaScript?",
+          topic: "Tiplər",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 17,
+          q: "What is undefined property?",
+          topic: "Tiplər",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 18,
+          q: "What is null value?",
+          topic: "Tiplər",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 19,
+          q: "What is the difference between null and undefined?",
+          topic: "Tiplər",
+          star: false,
+          prob: 65,
+        },
+        {
+          num: 20,
+          q: "What are the differences between undeclared and undefined variables?",
+          topic: "Tiplər",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 21,
+          q: "What is NaN property?",
+          topic: "Tiplər",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 22,
+          q: "What is isNaN?",
+          topic: "Tiplər",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 23,
+          q: "What is the difference between isNaN and Number.isNaN?",
+          topic: "Tiplər",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 24,
+          q: "What is the purpose of isFinite function?",
+          topic: "Tiplər",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 25,
+          q: "What is typeof operator?",
+          topic: "Tiplər",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 26,
+          q: "What is the difference between == and === operators?",
+          topic: "Tiplər",
+          star: false,
+          prob: 70,
+        },
+        {
+          num: 27,
+          q: "What are the various operators supported by JavaScript?",
+          topic: "Operatorlar",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 28,
+          q: "What are the bitwise operators available in JavaScript?",
+          topic: "Operatorlar",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 29,
+          q: "What is a conditional operator in JavaScript?",
+          topic: "Operatorlar",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 30,
+          q: "Can you apply chaining on conditional operator?",
+          topic: "Operatorlar",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 31,
+          q: "What is the purpose of the double exclamation (!!)? ",
+          topic: "Operatorlar",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 32,
+          q: "What is the purpose of double tilde (~~) operator?",
+          topic: "Operatorlar",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 33,
+          q: "What is a void operator?",
+          topic: "Operatorlar",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 34,
+          q: "What is the purpose of delete operator?",
+          topic: "Operatorlar",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 35,
+          q: "What is the purpose of void 0?",
+          topic: "Operatorlar",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 36,
+          q: "What is an Unary operator?",
+          topic: "Operatorlar",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 37,
+          q: "What is the output of console statement with unary operator?",
+          topic: "Operatorlar",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 38,
+          q: "Is the '!--' notation a special operator?",
+          topic: "Operatorlar",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 39,
+          q: "What is a comma operator?",
+          topic: "Operatorlar",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 40,
+          q: "What is the advantage of a comma operator?",
+          topic: "Operatorlar",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 41,
+          q: "What is a Short circuit condition?",
+          topic: "Operatorlar",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 42,
+          q: "What is optional chaining (?.) and nullish coalescing (??) operator?",
+          topic: "Operatorlar",
+          star: true,
+          prob: 70,
+        },
+        {
+          num: 43,
+          q: "What is the difference between || and ?? operators?",
+          topic: "Operatorlar",
+          star: true,
+          prob: 65,
+        },
+        // ─── 3. var / let / const / Scope ─────────────────────────────
+        {
+          num: 44,
+          q: "What is scope in JavaScript?",
+          topic: "Scope & Hoisting",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 45,
+          q: "What are global variables?",
+          topic: "Scope & Hoisting",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 46,
+          q: "What are the problems with global variables?",
+          topic: "Scope & Hoisting",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 47,
+          q: "What is the purpose of the let keyword?",
+          topic: "Scope & Hoisting",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 48,
+          q: "What is the difference between let and var?",
+          topic: "Scope & Hoisting",
+          star: false,
+          prob: 70,
+        },
+        {
+          num: 49,
+          q: "What is the reason to choose the name let as a keyword?",
+          topic: "Scope & Hoisting",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 50,
+          q: "Can I redeclare let and const variables?",
+          topic: "Scope & Hoisting",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 51,
+          q: "Is const variable makes the value immutable?",
+          topic: "Scope & Hoisting",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 52,
+          q: "How do you redeclare variables in switch block without an error?",
+          topic: "Scope & Hoisting",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 53,
+          q: "What is the Temporal Dead Zone?",
+          topic: "Scope & Hoisting",
+          star: false,
+          prob: 70,
+        },
+        {
+          num: 54,
+          q: "What is Hoisting?",
+          topic: "Scope & Hoisting",
+          star: false,
+          prob: 72,
+        },
+        {
+          num: 55,
+          q: "What are the benefits of keeping declarations at the top?",
+          topic: "Scope & Hoisting",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 56,
+          q: "What are the benefits of initializing variables?",
+          topic: "Scope & Hoisting",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 57,
+          q: "What is the precedence order between local and global variables?",
+          topic: "Scope & Hoisting",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 58,
+          q: "What is the difference between function scope and block scope?",
+          topic: "Scope & Hoisting",
+          star: true,
+          prob: 68,
+        },
+        {
+          num: 59,
+          q: "Are function declarations hoisted differently than function expressions?",
+          topic: "Scope & Hoisting",
+          star: true,
+          prob: 72,
+        },
+        // ─── 4. Funksiyalar ───────────────────────────────────────────
+        {
+          num: 60,
+          q: "What is a first class function?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 61,
+          q: "What is a first order function?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 62,
+          q: "What is a higher order function?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 65,
+        },
+        {
+          num: 63,
+          q: "What is a unary function?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 64,
+          q: "What are lambda or arrow functions?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 65,
+          q: "What is an anonymous function?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 66,
+          q: "What is IIFE (Immediately Invoked Function Expression)?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 67,
+          q: "How to invoke an IIFE without any extra brackets?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 68,
+          q: "What is a pure function?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 69,
+          q: "What is the currying function?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 65,
+        },
+        {
+          num: 70,
+          q: "What is memoization?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 65,
+        },
+        {
+          num: 71,
+          q: "What is a rest parameter?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 72,
+          q: "What happens if you do not use rest parameter as a last argument?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 73,
+          q: "What are default parameters?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 74,
+          q: "What is a spread operator?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 75,
+          q: "What are the differences between spread operator and rest parameter?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 76,
+          q: "What are the differences between arguments object and rest parameter?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 77,
+          q: "What is an arguments object?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 78,
+          q: "Can we define properties for functions?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 79,
+          q: "What is the way to find the number of parameters expected by a function?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 80,
+          q: "What is the difference between function and class declarations?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 81,
+          q: "What is the difference between Function constructor and function declaration?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 82,
+          q: "What is a thunk function?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 83,
+          q: "What are asynchronous thunks?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 84,
+          q: "What is a decorator?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 85,
+          q: "What is a Proper Tail Call?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 86,
+          q: "How to detect if a function is called as constructor?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 87,
+          q: "What are the function parameter rules?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 88,
+          q: "What is the output of below function calls?",
+          topic: "Funksiyalar",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 89,
+          q: "What is the difference between call, apply and bind?",
+          topic: "this & Binding",
+          star: true,
+          prob: 85,
+        },
+        {
+          num: 90,
+          q: "What is function composition?",
+          topic: "Funksiyalar",
+          star: true,
+          prob: 55,
+        },
+        {
+          num: 91,
+          q: "What is the difference between Call, Apply and Bind? (dərin)",
+          topic: "this & Binding",
+          star: false,
+          prob: 80,
+        },
+        // ─── 5. this ─────────────────────────────────────────────────
+        {
+          num: 92,
+          q: "What does 'this' keyword refer to in JavaScript?",
+          topic: "this & Binding",
+          star: false,
+          prob: 80,
+        },
+        {
+          num: 93,
+          q: "How does 'this' behave differently in arrow functions vs regular functions?",
+          topic: "this & Binding",
+          star: true,
+          prob: 90,
+        },
+        {
+          num: 94,
+          q: "What is explicit binding vs implicit binding of 'this'?",
+          topic: "this & Binding",
+          star: true,
+          prob: 78,
+        },
+        {
+          num: 95,
+          q: "What happens to 'this' inside a setTimeout callback?",
+          topic: "this & Binding",
+          star: true,
+          prob: 80,
+        },
+        {
+          num: 96,
+          q: "What is 'new' binding and how does it affect 'this'?",
+          topic: "this & Binding",
+          star: true,
+          prob: 75,
+        },
+        // ─── 6. Closures ─────────────────────────────────────────────
+        {
+          num: 97,
+          q: "What are closures?",
+          topic: "Closure",
+          star: false,
+          prob: 85,
+        },
+        {
+          num: 98,
+          q: "Give a practical example of a closure.",
+          topic: "Closure",
+          star: true,
+          prob: 88,
+        },
+        {
+          num: 99,
+          q: "What are the use cases of closures?",
+          topic: "Closure",
+          star: true,
+          prob: 80,
+        },
+        {
+          num: 100,
+          q: "What is the classic closure-in-loop bug and how to fix it?",
+          topic: "Closure",
+          star: true,
+          prob: 85,
+        },
+        {
+          num: 101,
+          q: "Can closures cause memory leaks? How?",
+          topic: "Closure",
+          star: true,
+          prob: 70,
+        },
+        {
+          num: 102,
+          q: "What is the benefit of using modules (related to closures)?",
+          topic: "Closure",
+          star: false,
+          prob: 40,
+        },
+        // ─── 7. Prototype & OOP ──────────────────────────────────────
+        {
+          num: 103,
+          q: "What are the possible ways to create objects in JavaScript?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 104,
+          q: "What is prototype chain?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 78,
+        },
+        {
+          num: 105,
+          q: "What is the difference between __proto__ and prototype?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 75,
+        },
+        {
+          num: 106,
+          q: "Is all objects have prototypes?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 107,
+          q: "What are classes in ES6?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 108,
+          q: "What is a constructor method?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 109,
+          q: "What happens if you write constructor more than once in a class?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 110,
+          q: "How do you call the constructor of a parent class?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 111,
+          q: "How do you extend classes?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 112,
+          q: "How do you get the prototype of an object?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 113,
+          q: "What happens if I pass string type for getPrototype method?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 114,
+          q: "How do you set prototype of one object to another?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 115,
+          q: "How do you create an object with prototype?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 116,
+          q: "What are the recommendations to create new object?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 117,
+          q: "What is an object initializer?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 118,
+          q: "How do you define multiple properties on an object?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 119,
+          q: "How do you get property descriptors of an object?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 120,
+          q: "What are the attributes provided by a property descriptor?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 121,
+          q: "What are javascript accessors (getters and setters)?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 122,
+          q: "How do you define property on Object constructor?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 123,
+          q: "What is the difference between get and defineProperty?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 124,
+          q: "What are the advantages of Getters and Setters?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 125,
+          q: "Can I add getters and setters using defineProperty method?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 126,
+          q: "How do you define instance and non-instance properties?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 127,
+          q: "What are the different ways to access object properties?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 128,
+          q: "What is the difference between classical inheritance and prototypal inheritance?",
+          topic: "Prototype & OOP",
+          star: true,
+          prob: 80,
+        },
+        {
+          num: 129,
+          q: "What is method chaining and how do you implement it?",
+          topic: "Prototype & OOP",
+          star: true,
+          prob: 60,
+        },
+        {
+          num: 130,
+          q: "What are mixins in JavaScript?",
+          topic: "Prototype & OOP",
+          star: true,
+          prob: 45,
+        },
+        {
+          num: 131,
+          q: "Does JavaScript support mixins?",
+          topic: "Prototype & OOP",
+          star: false,
+          prob: 35,
+        },
+        // ─── 8. Object Metodları ─────────────────────────────────────
+        {
+          num: 132,
+          q: "How do you compare Object and Map?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 133,
+          q: "How do you copy properties from one object to other (Object.assign)?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 134,
+          q: "What are the applications of assign method?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 135,
+          q: "How do you check if a key exists in an object?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 136,
+          q: "How do you loop through or enumerate a JavaScript object?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 137,
+          q: "How do you test for an empty object?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 138,
+          q: "How do you list all properties of an object?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 139,
+          q: "How can you get the list of keys of any object?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 140,
+          q: "How do you get enumerable key and value pairs?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 141,
+          q: "What is the main difference between Object.values and Object.entries method?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 142,
+          q: "What is a freeze method?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 143,
+          q: "What is the purpose of freeze method?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 144,
+          q: "Why do I need to use freeze method?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 145,
+          q: "How do you determine whether object is frozen or not?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 146,
+          q: "What is the purpose of seal method?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 147,
+          q: "What are the applications of seal method?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 148,
+          q: "What are the differences between freeze and seal methods?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 149,
+          q: "How do you determine if an object is sealed or not?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 150,
+          q: "What is the purpose of using Object.is method?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 151,
+          q: "How do you determine two values are the same using Object.is?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 152,
+          q: "How do you check whether an object can be extendable or not?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 153,
+          q: "How do you prevent an object from being extended?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 154,
+          q: "What are the different ways to make an object non-extensible?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 155,
+          q: "What is a proxy object?",
+          topic: "Object Metodları",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 156,
+          q: "What is the difference between Object.freeze and const?",
+          topic: "Object Metodları",
+          star: true,
+          prob: 70,
+        },
+        {
+          num: 157,
+          q: "What is the difference between shallow copy and deep copy?",
+          topic: "Object Metodları",
+          star: true,
+          prob: 75,
+        },
+        {
+          num: 158,
+          q: "What is the difference between Shallow and Deep copy? (implementations)",
+          topic: "Object Metodları",
+          star: false,
+          prob: 70,
+        },
+        // ─── 9. Array Metodları ──────────────────────────────────────
+        {
+          num: 159,
+          q: "What is the purpose of the array slice method?",
+          topic: "Array",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 160,
+          q: "What is the purpose of the array splice method?",
+          topic: "Array",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 161,
+          q: "What is the difference between slice and splice?",
+          topic: "Array",
+          star: false,
+          prob: 65,
+        },
+        {
+          num: 162,
+          q: "How do you sort elements in an array?",
+          topic: "Array",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 163,
+          q: "What is the purpose of compareFunction while sorting arrays?",
+          topic: "Array",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 164,
+          q: "How do you reverse an array?",
+          topic: "Array",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 165,
+          q: "How do you find min and max value in an array?",
+          topic: "Array",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 166,
+          q: "How do you find min and max values without Math functions?",
+          topic: "Array",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 167,
+          q: "How do you combine two or more arrays?",
+          topic: "Array",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 168,
+          q: "What is the purpose of some method in arrays?",
+          topic: "Array",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 169,
+          q: "How do you return all matching strings against a regular expression?",
+          topic: "Array",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 170,
+          q: "How do you empty an array?",
+          topic: "Array",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 171,
+          q: "How do you get unique values of an array?",
+          topic: "Array",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 172,
+          q: "How do you remove falsy values from an array?",
+          topic: "Array",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 173,
+          q: "How do you map the array values without using map method?",
+          topic: "Array",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 174,
+          q: "How do you flatten multi dimensional arrays?",
+          topic: "Array",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 175,
+          q: "What is the easiest way to convert an array to an object?",
+          topic: "Array",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 176,
+          q: "How do you create an array with some data?",
+          topic: "Array",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 177,
+          q: "What is the easiest way to resize an array?",
+          topic: "Array",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 178,
+          q: "What is typed arrays (ArrayBuffer)?",
+          topic: "Array",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 179,
+          q: "What is ArrayBuffer?",
+          topic: "Array",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 180,
+          q: "How do you compare scalar arrays?",
+          topic: "Array",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 181,
+          q: "What is the output of below spread operator array?",
+          topic: "Array",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 182,
+          q: "What is the difference between Array.from() and Array.of()?",
+          topic: "Array",
+          star: true,
+          prob: 55,
+        },
+        {
+          num: 183,
+          q: "What does Array.prototype.reduce() do? Give an example.",
+          topic: "Array",
+          star: true,
+          prob: 70,
+        },
+        {
+          num: 184,
+          q: "What is the difference between forEach and map?",
+          topic: "Array",
+          star: true,
+          prob: 70,
+        },
+        {
+          num: 185,
+          q: "What is the difference between find and filter?",
+          topic: "Array",
+          star: true,
+          prob: 65,
+        },
+        {
+          num: 186,
+          q: "How does Array.prototype.flat() work?",
+          topic: "Array",
+          star: true,
+          prob: 55,
+        },
+        {
+          num: 187,
+          q: "How do you check whether an array includes a particular value or not?",
+          topic: "Array",
+          star: false,
+          prob: 45,
+        },
+        // ─── 10. String Metodları ────────────────────────────────────
+        {
+          num: 188,
+          q: "How do you check whether a string contains a substring?",
+          topic: "String",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 189,
+          q: "How do you check if a string starts with another string?",
+          topic: "String",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 190,
+          q: "How do you trim a string in JavaScript?",
+          topic: "String",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 191,
+          q: "How do you trim a string at the beginning or ending?",
+          topic: "String",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 192,
+          q: "How do you make first letter of the string in an uppercase?",
+          topic: "String",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 193,
+          q: "How to convert string to title case with JavaScript?",
+          topic: "String",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 194,
+          q: "How do you define multiline strings?",
+          topic: "String",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 195,
+          q: "What are template literals?",
+          topic: "String",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 196,
+          q: "How do you write multi-line strings in template literals?",
+          topic: "String",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 197,
+          q: "What are nesting templates?",
+          topic: "String",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 198,
+          q: "What are tagged templates?",
+          topic: "String",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 199,
+          q: "What are raw strings?",
+          topic: "String",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 200,
+          q: "How do you create specific number of copies of a string?",
+          topic: "String",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 201,
+          q: "How to remove all line breaks from a string?",
+          topic: "String",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 202,
+          q: "What is the output of below string expression?",
+          topic: "String",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 203,
+          q: "How do you create self string using special characters?",
+          topic: "String",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 204,
+          q: "What is the output of 1+2+'3'?",
+          topic: "String",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 205,
+          q: "What are the differences between String.prototype.indexOf and includes?",
+          topic: "String",
+          star: true,
+          prob: 50,
+        },
+        {
+          num: 206,
+          q: "What does String.prototype.matchAll() do?",
+          topic: "String",
+          star: true,
+          prob: 45,
+        },
+        // ─── 11. Destructuring, Spread, Rest ─────────────────────────
+        {
+          num: 207,
+          q: "What is destructuring assignment?",
+          topic: "Destructuring",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 208,
+          q: "What are default values in destructuring assignment?",
+          topic: "Destructuring",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 209,
+          q: "How do you swap variables in destructuring assignment?",
+          topic: "Destructuring",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 210,
+          q: "What are destructuring aliases?",
+          topic: "Destructuring",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 211,
+          q: "What are enhanced object literals?",
+          topic: "Destructuring",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 212,
+          q: "How do you do nested destructuring?",
+          topic: "Destructuring",
+          star: true,
+          prob: 55,
+        },
+        {
+          num: 213,
+          q: "How do you use destructuring with function parameters?",
+          topic: "Destructuring",
+          star: true,
+          prob: 60,
+        },
+        // ─── 12. Async: Callbacks, Promises, Async/Await ──────────────
+        {
+          num: 214,
+          q: "What is a callback function?",
+          topic: "Async JS",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 215,
+          q: "Why do we need callbacks?",
+          topic: "Async JS",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 216,
+          q: "What is a callback hell?",
+          topic: "Async JS",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 217,
+          q: "What is callback in callback?",
+          topic: "Async JS",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 218,
+          q: "What is a promise?",
+          topic: "Async JS",
+          star: false,
+          prob: 70,
+        },
+        {
+          num: 219,
+          q: "Why do you need a promise?",
+          topic: "Async JS",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 220,
+          q: "What are the three states of promise?",
+          topic: "Async JS",
+          star: false,
+          prob: 65,
+        },
+        {
+          num: 221,
+          q: "What are the main rules of promise?",
+          topic: "Async JS",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 222,
+          q: "What is promise chaining?",
+          topic: "Async JS",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 223,
+          q: "What is Promise.all?",
+          topic: "Async JS",
+          star: false,
+          prob: 70,
+        },
+        {
+          num: 224,
+          q: "What is the purpose of race method in promise?",
+          topic: "Async JS",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 225,
+          q: "What are the pros and cons of promises over callbacks?",
+          topic: "Async JS",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 226,
+          q: "How do you prevent promises swallowing errors?",
+          topic: "Async JS",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 227,
+          q: "What is the easiest way to ignore promise errors?",
+          topic: "Async JS",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 228,
+          q: "What is an async function?",
+          topic: "Async JS",
+          star: false,
+          prob: 65,
+        },
+        {
+          num: 229,
+          q: "How do you check an object is a promise or not?",
+          topic: "Async JS",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 230,
+          q: "What are the differences between promises and observables?",
+          topic: "Async JS",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 231,
+          q: "What are the different ways to deal with Asynchronous Code?",
+          topic: "Async JS",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 232,
+          q: "What is Promise.allSettled() and how does it differ from Promise.all()?",
+          topic: "Async JS",
+          star: true,
+          prob: 75,
+        },
+        {
+          num: 233,
+          q: "What is Promise.any()?",
+          topic: "Async JS",
+          star: true,
+          prob: 55,
+        },
+        {
+          num: 234,
+          q: "What is the difference between async/await and promise chaining?",
+          topic: "Async JS",
+          star: true,
+          prob: 78,
+        },
+        {
+          num: 235,
+          q: "How do you handle errors in async/await?",
+          topic: "Async JS",
+          star: true,
+          prob: 80,
+        },
+        {
+          num: 236,
+          q: "Can you run multiple async functions in parallel? How?",
+          topic: "Async JS",
+          star: true,
+          prob: 78,
+        },
+        // ─── 13. Event Loop ───────────────────────────────────────────
+        {
+          num: 237,
+          q: "What is an event loop?",
+          topic: "Event Loop",
+          star: false,
+          prob: 82,
+        },
+        {
+          num: 238,
+          q: "What is call stack?",
+          topic: "Event Loop",
+          star: false,
+          prob: 72,
+        },
+        {
+          num: 239,
+          q: "What is an event queue?",
+          topic: "Event Loop",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 240,
+          q: "What are tasks in event loop?",
+          topic: "Event Loop",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 241,
+          q: "What are microtasks?",
+          topic: "Event Loop",
+          star: false,
+          prob: 65,
+        },
+        {
+          num: 242,
+          q: "What are different event loops?",
+          topic: "Event Loop",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 243,
+          q: "What is the purpose of queueMicrotask?",
+          topic: "Event Loop",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 244,
+          q: "What is heap?",
+          topic: "Event Loop",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 245,
+          q: "What is an event table?",
+          topic: "Event Loop",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 246,
+          q: "What is a microTask queue?",
+          topic: "Event Loop",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 247,
+          q: "What is minimum timeout throttling?",
+          topic: "Event Loop",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 248,
+          q: "How do you implement zero timeout in modern browsers?",
+          topic: "Event Loop",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 249,
+          q: "What is the order of execution: setTimeout(0) vs Promise.resolve()?",
+          topic: "Event Loop",
+          star: true,
+          prob: 90,
+        },
+        {
+          num: 250,
+          q: "What is the difference between macrotasks and microtasks?",
+          topic: "Event Loop",
+          star: true,
+          prob: 88,
+        },
+        {
+          num: 251,
+          q: "What happens when the call stack overflows?",
+          topic: "Event Loop",
+          star: true,
+          prob: 65,
+        },
+        // ─── 14. Generators & Iterators ──────────────────────────────
+        {
+          num: 252,
+          q: "What is an Iterator?",
+          topic: "Generators",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 253,
+          q: "How does synchronous iteration work?",
+          topic: "Generators",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 254,
+          q: "What are the built-in iterables?",
+          topic: "Generators",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 255,
+          q: "What are the different kinds of generators?",
+          topic: "Generators",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 256,
+          q: "What is for...of statement?",
+          topic: "Generators",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 257,
+          q: "What are the differences between for...of and for...in statements?",
+          topic: "Generators",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 258,
+          q: "How do you make an object iterable in JavaScript?",
+          topic: "Generators",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 259,
+          q: "What is a generator function and how does yield work?",
+          topic: "Generators",
+          star: true,
+          prob: 60,
+        },
+        {
+          num: 260,
+          q: "What is the difference between a generator and an iterator?",
+          topic: "Generators",
+          star: true,
+          prob: 50,
+        },
+        {
+          num: 261,
+          q: "What are practical use cases for generators?",
+          topic: "Generators",
+          star: true,
+          prob: 50,
+        },
+        // ─── 15. Modules ─────────────────────────────────────────────
+        {
+          num: 262,
+          q: "What are modules?",
+          topic: "Modules",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 263,
+          q: "Why do you need modules?",
+          topic: "Modules",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 264,
+          q: "What is the benefit of using modules?",
+          topic: "Modules",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 265,
+          q: "What are dynamic imports?",
+          topic: "Modules",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 266,
+          q: "What are the use cases for dynamic imports?",
+          topic: "Modules",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 267,
+          q: "What are the advantages of module loaders?",
+          topic: "Modules",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 268,
+          q: "How do you get meta data of a module?",
+          topic: "Modules",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 269,
+          q: "What is tree shaking?",
+          topic: "Modules",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 270,
+          q: "What is the need of tree shaking?",
+          topic: "Modules",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 271,
+          q: "What is the difference between CommonJS and ES Modules?",
+          topic: "Modules",
+          star: true,
+          prob: 65,
+        },
+        {
+          num: 272,
+          q: "What is the difference between named exports and default exports?",
+          topic: "Modules",
+          star: true,
+          prob: 60,
+        },
+        {
+          num: 273,
+          q: "What is circular dependency in modules and how to handle it?",
+          topic: "Modules",
+          star: true,
+          prob: 50,
+        },
+        // ─── 16. Error Handling ───────────────────────────────────────
+        {
+          num: 274,
+          q: "What is an error object?",
+          topic: "Error Handling",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 275,
+          q: "When do you get a syntax error?",
+          topic: "Error Handling",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 276,
+          q: "What are the different error names from error object?",
+          topic: "Error Handling",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 277,
+          q: "What are the various statements in error handling?",
+          topic: "Error Handling",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 278,
+          q: "What is the purpose of Error object?",
+          topic: "Error Handling",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 279,
+          q: "What is the purpose of EvalError object?",
+          topic: "Error Handling",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 280,
+          q: "What are the list of cases error thrown from non-strict mode to strict mode?",
+          topic: "Error Handling",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 281,
+          q: "What is the difference between throw and return in error handling?",
+          topic: "Error Handling",
+          star: true,
+          prob: 50,
+        },
+        {
+          num: 282,
+          q: "How do you create a custom error class?",
+          topic: "Error Handling",
+          star: true,
+          prob: 55,
+        },
+        {
+          num: 283,
+          q: "What is the finally block and when does it execute?",
+          topic: "Error Handling",
+          star: true,
+          prob: 60,
+        },
+        // ─── 17. Regex ───────────────────────────────────────────────
+        {
+          num: 284,
+          q: "What is a Regular Expression?",
+          topic: "Regex",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 285,
+          q: "What is a RegExp object?",
+          topic: "Regex",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 286,
+          q: "What are regular expression patterns?",
+          topic: "Regex",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 287,
+          q: "What are modifiers in regular expression?",
+          topic: "Regex",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 288,
+          q: "What are the string methods available in Regular expression?",
+          topic: "Regex",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 289,
+          q: "How do you search a string for a pattern?",
+          topic: "Regex",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 290,
+          q: "What is the purpose of exec method?",
+          topic: "Regex",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 291,
+          q: "How do you return all matching strings against a regular expression?",
+          topic: "Regex",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 292,
+          q: "What is the difference between test() and exec() in RegExp?",
+          topic: "Regex",
+          star: true,
+          prob: 45,
+        },
+        {
+          num: 293,
+          q: "What are lookahead and lookbehind assertions in regex?",
+          topic: "Regex",
+          star: true,
+          prob: 40,
+        },
+        // ─── 18. Strict Mode ─────────────────────────────────────────
+        {
+          num: 294,
+          q: "What is strict mode in JavaScript?",
+          topic: "Strict Mode",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 295,
+          q: "Why do you need strict mode?",
+          topic: "Strict Mode",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 296,
+          q: "How do you declare strict mode?",
+          topic: "Strict Mode",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 297,
+          q: "What are the list of cases error thrown from non-strict mode to strict mode?",
+          topic: "Strict Mode",
+          star: false,
+          prob: 30,
+        },
+        // ─── 19. Map, Set, WeakMap, WeakSet ──────────────────────────
+        {
+          num: 298,
+          q: "How do you compare Object and Map? (II)",
+          topic: "Map & Set",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 299,
+          q: "What is a WeakSet?",
+          topic: "Map & Set",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 300,
+          q: "What are the differences between WeakSet and Set?",
+          topic: "Map & Set",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 301,
+          q: "List down the collection of methods available on WeakSet.",
+          topic: "Map & Set",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 302,
+          q: "What is a WeakMap?",
+          topic: "Map & Set",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 303,
+          q: "What are the differences between WeakMap and Map?",
+          topic: "Map & Set",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 304,
+          q: "List down the collection of methods available on WeakMap.",
+          topic: "Map & Set",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 305,
+          q: "What is the difference between Map and Object for key-value storage?",
+          topic: "Map & Set",
+          star: true,
+          prob: 65,
+        },
+        {
+          num: 306,
+          q: "What are WeakRef and FinalizationRegistry?",
+          topic: "Map & Set",
+          star: true,
+          prob: 40,
+        },
+        {
+          num: 307,
+          q: "Why would you use WeakMap over Map?",
+          topic: "Map & Set",
+          star: true,
+          prob: 55,
+        },
+        // ─── 20. DOM ─────────────────────────────────────────────────
+        {
+          num: 308,
+          q: "What are events?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 309,
+          q: "What is an event flow?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 310,
+          q: "What is event bubbling?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 70,
+        },
+        {
+          num: 311,
+          q: "What is event capturing?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 65,
+        },
+        {
+          num: 312,
+          q: "What is an event delegation?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 70,
+        },
+        {
+          num: 313,
+          q: "What is the use of preventDefault method?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 314,
+          q: "What is the use of stopPropagation method?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 315,
+          q: "What are the steps involved in return false?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 316,
+          q: "What are the different methods to find HTML elements in DOM?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 317,
+          q: "How do you change style of a HTML element?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 318,
+          q: "What is the difference between document load and DOMContentLoaded events?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 319,
+          q: "What are the ways to execute JavaScript after page load?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 320,
+          q: "What is the difference between an attribute and a property?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 321,
+          q: "What is the difference between native, host and user objects?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 322,
+          q: "What is the difference between reflow and repaint?",
+          topic: "DOM & Events",
+          star: false,
+          prob: 65,
+        },
+        {
+          num: 323,
+          q: "What is the difference between innerHTML and textContent?",
+          topic: "DOM & Events",
+          star: true,
+          prob: 60,
+        },
+        {
+          num: 324,
+          q: "What is event.target vs event.currentTarget?",
+          topic: "DOM & Events",
+          star: true,
+          prob: 70,
+        },
+        {
+          num: 325,
+          q: "How do you create and dispatch a custom event?",
+          topic: "DOM & Events",
+          star: true,
+          prob: 50,
+        },
+        {
+          num: 326,
+          q: "What is the difference between addEventListener and onclick?",
+          topic: "DOM & Events",
+          star: true,
+          prob: 60,
+        },
+        // ─── 21. BOM ─────────────────────────────────────────────────
+        { num: 327, q: "What is BOM?", topic: "BOM", star: false, prob: 35 },
+        {
+          num: 328,
+          q: "What is the difference between window and document?",
+          topic: "BOM",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 329,
+          q: "How do you access history in JavaScript?",
+          topic: "BOM",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 330,
+          q: "What are the various url properties of location object?",
+          topic: "BOM",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 331,
+          q: "How do you get the current url with JavaScript?",
+          topic: "BOM",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 332,
+          q: "How do get query string values in JavaScript?",
+          topic: "BOM",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 333,
+          q: "How do you redirect to a new page in JavaScript?",
+          topic: "BOM",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 334,
+          q: "What are the properties used to get size of window?",
+          topic: "BOM",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 335,
+          q: "How do I modify the url without reloading the page?",
+          topic: "BOM",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 336,
+          q: "What is the use of setTimeout?",
+          topic: "BOM",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 337,
+          q: "What is the use of setInterval?",
+          topic: "BOM",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 338,
+          q: "What is the purpose of clearTimeout method?",
+          topic: "BOM",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 339,
+          q: "What is the purpose of clearInterval method?",
+          topic: "BOM",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 340,
+          q: "How do you find operating system details?",
+          topic: "BOM",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 341,
+          q: "What is same-origin policy?",
+          topic: "BOM",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 342,
+          q: "How do you detect a mobile browser?",
+          topic: "BOM",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 343,
+          q: "How do you detect a mobile browser without regexp?",
+          topic: "BOM",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 344,
+          q: "How do you detect browser language preference?",
+          topic: "BOM",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 345,
+          q: "How do you detect JavaScript disabled in the page?",
+          topic: "BOM",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 346,
+          q: "How do you detect caps lock key turned on or not?",
+          topic: "BOM",
+          star: false,
+          prob: 10,
+        },
+        // ─── 22. Web Storage / Cookies ───────────────────────────────
+        {
+          num: 347,
+          q: "What is web storage?",
+          topic: "Storage & Cookies",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 348,
+          q: "Why do you need web storage?",
+          topic: "Storage & Cookies",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 349,
+          q: "What are the differences between cookie, local storage and session storage?",
+          topic: "Storage & Cookies",
+          star: false,
+          prob: 72,
+        },
+        {
+          num: 350,
+          q: "What is the main difference between localStorage and sessionStorage?",
+          topic: "Storage & Cookies",
+          star: false,
+          prob: 65,
+        },
+        {
+          num: 351,
+          q: "How do you access web storage?",
+          topic: "Storage & Cookies",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 352,
+          q: "What are the methods available on session storage?",
+          topic: "Storage & Cookies",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 353,
+          q: "What is a storage event and its event handler?",
+          topic: "Storage & Cookies",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 354,
+          q: "How do you check web storage browser support?",
+          topic: "Storage & Cookies",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 355,
+          q: "What is a cookie?",
+          topic: "Storage & Cookies",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 356,
+          q: "Why do you need a Cookie?",
+          topic: "Storage & Cookies",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 357,
+          q: "What are the options in a cookie?",
+          topic: "Storage & Cookies",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 358,
+          q: "How do you delete a cookie?",
+          topic: "Storage & Cookies",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 359,
+          q: "What is the SameSite cookie attribute?",
+          topic: "Storage & Cookies",
+          star: true,
+          prob: 50,
+        },
+        {
+          num: 360,
+          q: "What is the difference between httpOnly and secure cookie flags?",
+          topic: "Storage & Cookies",
+          star: true,
+          prob: 55,
+        },
+        {
+          num: 361,
+          q: "What is IndexedDB and when would you use it?",
+          topic: "Storage & Cookies",
+          star: true,
+          prob: 45,
+        },
+        {
+          num: 362,
+          q: "What is IndexedDB?",
+          topic: "Storage & Cookies",
+          star: false,
+          prob: 40,
+        },
+        // ─── 23. Service Workers / PWA / Web APIs ─────────────────────
+        {
+          num: 363,
+          q: "What is a service worker?",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 364,
+          q: "How do you manipulate DOM using a service worker?",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 365,
+          q: "How do you reuse information across service worker restarts?",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 366,
+          q: "What are PWAs?",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 367,
+          q: "What is an app shell model?",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 368,
+          q: "What are web workers?",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 369,
+          q: "How do you check web workers browser support?",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 370,
+          q: "Give an example of web worker.",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 371,
+          q: "What are the restrictions of web workers on DOM?",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 372,
+          q: "What is a post message?",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 373,
+          q: "Is PostMessage secure?",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 374,
+          q: "What are the problems with postmessage target origin as wildcard?",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 375,
+          q: "How do you avoid receiving postMessages from attackers?",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 376,
+          q: "Is postMessages synchronous?",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 377,
+          q: "What is web speech API?",
+          topic: "Service Workers & PWA",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 378,
+          q: "What is the Cache API and how is it used in service workers?",
+          topic: "Service Workers & PWA",
+          star: true,
+          prob: 45,
+        },
+        {
+          num: 379,
+          q: "What is the Fetch API and how does it differ from XMLHttpRequest?",
+          topic: "Service Workers & PWA",
+          star: true,
+          prob: 60,
+        },
+        // ─── 24. AJAX, Fetch, HTTP ────────────────────────────────────
+        {
+          num: 380,
+          q: "What is AJAX?",
+          topic: "Network & HTTP",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 381,
+          q: "How do you make synchronous HTTP request?",
+          topic: "Network & HTTP",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 382,
+          q: "How do you make asynchronous HTTP request?",
+          topic: "Network & HTTP",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 383,
+          q: "How to cancel a fetch request?",
+          topic: "Network & HTTP",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 384,
+          q: "What are the differences between promises and observables?",
+          topic: "Network & HTTP",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 385,
+          q: "What is server-sent events?",
+          topic: "Network & HTTP",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 386,
+          q: "How do you receive server-sent event notifications?",
+          topic: "Network & HTTP",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 387,
+          q: "How do you check browser support for server-sent events?",
+          topic: "Network & HTTP",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 388,
+          q: "What are the events available for server sent events?",
+          topic: "Network & HTTP",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 389,
+          q: "What is the difference between fetch() and XMLHttpRequest?",
+          topic: "Network & HTTP",
+          star: true,
+          prob: 65,
+        },
+        {
+          num: 390,
+          q: "What are HTTP methods and when do you use each?",
+          topic: "Network & HTTP",
+          star: true,
+          prob: 65,
+        },
+        {
+          num: 391,
+          q: "What is CORS and how do you handle it?",
+          topic: "Network & HTTP",
+          star: true,
+          prob: 70,
+        },
+        {
+          num: 392,
+          q: "What is the difference between REST and GraphQL?",
+          topic: "Network & HTTP",
+          star: true,
+          prob: 55,
+        },
+        // ─── 25. JSON ─────────────────────────────────────────────────
+        { num: 393, q: "What is JSON?", topic: "JSON", star: false, prob: 35 },
+        {
+          num: 394,
+          q: "What are the syntax rules of JSON?",
+          topic: "JSON",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 395,
+          q: "What is the purpose of JSON stringify?",
+          topic: "JSON",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 396,
+          q: "How do you parse JSON string?",
+          topic: "JSON",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 397,
+          q: "Why do you need JSON?",
+          topic: "JSON",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 398,
+          q: "What are JSON's common operations?",
+          topic: "JSON",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 399,
+          q: "How do you define JSON arrays?",
+          topic: "JSON",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 400,
+          q: "What is the replacer parameter in JSON.stringify()?",
+          topic: "JSON",
+          star: true,
+          prob: 45,
+        },
+        {
+          num: 401,
+          q: "How do you deep clone an object using JSON?",
+          topic: "JSON",
+          star: true,
+          prob: 60,
+        },
+        {
+          num: 402,
+          q: "What are the limitations of JSON.parse/stringify for deep cloning?",
+          topic: "JSON",
+          star: true,
+          prob: 60,
+        },
+        // ─── 26. Performans ───────────────────────────────────────────
+        {
+          num: 403,
+          q: "What is Minification?",
+          topic: "Performans",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 404,
+          q: "What are the advantages of minification?",
+          topic: "Performans",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 405,
+          q: "What Is Obfuscation in JavaScript?",
+          topic: "Performans",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 406,
+          q: "Why do you need Obfuscation?",
+          topic: "Performans",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 407,
+          q: "What are the differences between Obfuscation and Encryption?",
+          topic: "Performans",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 408,
+          q: "What are the common tools used for minification?",
+          topic: "Performans",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 409,
+          q: "What are the tools or techniques used for debugging JavaScript code?",
+          topic: "Performans",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 410,
+          q: "What is a debugger statement?",
+          topic: "Performans",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 411,
+          q: "What is the purpose of breakpoints in debugging?",
+          topic: "Performans",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 412,
+          q: "What is the difference between reflow and repaint? (II)",
+          topic: "Performans",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 413,
+          q: "What is memoization? (II)",
+          topic: "Performans",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 414,
+          q: "What is a polyfill?",
+          topic: "Performans",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 415,
+          q: "What is the difference between shim and polyfill?",
+          topic: "Performans",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 416,
+          q: "What is babel?",
+          topic: "Performans",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 417,
+          q: "What is debouncing and throttling?",
+          topic: "Performans",
+          star: true,
+          prob: 78,
+        },
+        {
+          num: 418,
+          q: "How do you measure performance in JavaScript?",
+          topic: "Performans",
+          star: true,
+          prob: 60,
+        },
+        {
+          num: 419,
+          q: "What is lazy loading?",
+          topic: "Performans",
+          star: true,
+          prob: 65,
+        },
+        {
+          num: 420,
+          q: "What are memory leaks in JavaScript and how do you prevent them?",
+          topic: "Performans",
+          star: true,
+          prob: 72,
+        },
+        // ─── 27. Console / Utils ─────────────────────────────────────
+        {
+          num: 421,
+          q: "What are the placeholders from console object?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 422,
+          q: "Is it possible to add CSS to console messages?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 423,
+          q: "What is the purpose of dir method of console object?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 424,
+          q: "Is it possible to debug HTML elements in console?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 425,
+          q: "How do you display data in a tabular format using console object?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 426,
+          q: "How do you style the console output using CSS?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 427,
+          q: "How do you print numbers with commas as thousand separators?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 428,
+          q: "How do you generate random integers?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 429,
+          q: "Can you write a random integers function to print integers within a range?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 430,
+          q: "How do you rounding numbers to certain decimals?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 431,
+          q: "What is the shortcut to get timestamp?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 432,
+          q: "How do you display the current date in JavaScript?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 433,
+          q: "How do you compare two date objects?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 434,
+          q: "How do you convert date to another timezone in JavaScript?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 435,
+          q: "How do get the timezone offset from date?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 436,
+          q: "How do you get the image width and height using JS?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 437,
+          q: "How do you validate an email in JavaScript?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 438,
+          q: "How do you create copy to clipboard button?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 439,
+          q: "How do you capture browser back button?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 440,
+          q: "How do you disable right click in the web page?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 441,
+          q: "What are wrapper objects?",
+          topic: "Console & Utils",
+          star: false,
+          prob: 35,
+        },
+        // ─── 28. TypeScript ───────────────────────────────────────────
+        {
+          num: 442,
+          q: "What is TypeScript?",
+          topic: "TypeScript",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 443,
+          q: "What are the differences between JavaScript and TypeScript?",
+          topic: "TypeScript",
+          star: false,
+          prob: 60,
+        },
+        {
+          num: 444,
+          q: "What are the advantages of TypeScript over JavaScript?",
+          topic: "TypeScript",
+          star: false,
+          prob: 55,
+        },
+        {
+          num: 445,
+          q: "How do you use JavaScript libraries in TypeScript file?",
+          topic: "TypeScript",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 446,
+          q: "What are TypeScript generics?",
+          topic: "TypeScript",
+          star: true,
+          prob: 72,
+        },
+        {
+          num: 447,
+          q: "What are TypeScript utility types (Partial, Required, Pick, Omit)?",
+          topic: "TypeScript",
+          star: true,
+          prob: 70,
+        },
+        {
+          num: 448,
+          q: "What is the difference between interface and type in TypeScript?",
+          topic: "TypeScript",
+          star: true,
+          prob: 75,
+        },
+        {
+          num: 449,
+          q: "What are type guards in TypeScript?",
+          topic: "TypeScript",
+          star: true,
+          prob: 65,
+        },
+        {
+          num: 450,
+          q: "What is a union type and intersection type?",
+          topic: "TypeScript",
+          star: true,
+          prob: 68,
+        },
+        {
+          num: 451,
+          q: "What is the difference between any, unknown, and never?",
+          topic: "TypeScript",
+          star: true,
+          prob: 72,
+        },
+        // ─── 29. RxJS / Observables ───────────────────────────────────
+        {
+          num: 452,
+          q: "What is an observable?",
+          topic: "RxJS",
+          star: false,
+          prob: 45,
+        },
+        {
+          num: 453,
+          q: "What are the common use cases of observables?",
+          topic: "RxJS",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 454,
+          q: "What are the differences between promises and observables?",
+          topic: "RxJS",
+          star: false,
+          prob: 50,
+        },
+        { num: 455, q: "What is RxJS?", topic: "RxJS", star: false, prob: 40 },
+        {
+          num: 456,
+          q: "What is the difference between Subject and BehaviorSubject in RxJS?",
+          topic: "RxJS",
+          star: true,
+          prob: 55,
+        },
+        {
+          num: 457,
+          q: "What are common RxJS operators (map, filter, mergeMap, switchMap)?",
+          topic: "RxJS",
+          star: true,
+          prob: 58,
+        },
+        // ─── 30. Digər Mövzular ───────────────────────────────────────
+        {
+          num: 458,
+          q: "What is a polyfill? (II)",
+          topic: "Digər",
+          star: false,
+          prob: 50,
+        },
+        {
+          num: 459,
+          q: "Is it recommended to use eval?",
+          topic: "Digər",
+          star: false,
+          prob: 40,
+        },
+        { num: 460, q: "What is eval?", topic: "Digər", star: false, prob: 35 },
+        {
+          num: 461,
+          q: "What is the difference between uneval and eval?",
+          topic: "Digər",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 462,
+          q: "What is the purpose of uneval?",
+          topic: "Digər",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 463,
+          q: "What is collation?",
+          topic: "Digər",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 464,
+          q: "What is an Intl object?",
+          topic: "Digər",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 465,
+          q: "How do you perform language specific date and time formatting?",
+          topic: "Digər",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 466,
+          q: "What are the properties of Intl object?",
+          topic: "Digər",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 467,
+          q: "Is enums feature available in JavaScript?",
+          topic: "Digər",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 468,
+          q: "What is an enum?",
+          topic: "Digər",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 469,
+          q: "What is jQuery?",
+          topic: "Digər",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 470,
+          q: "What is MEAN in JavaScript?",
+          topic: "Digər",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 471,
+          q: "Is Node.js completely single threaded?",
+          topic: "Digər",
+          star: false,
+          prob: 40,
+        },
+        { num: 472, q: "What is deno?", topic: "Digər", star: false, prob: 20 },
+        {
+          num: 473,
+          q: "What is an empty statement and purpose of it?",
+          topic: "Digər",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 474,
+          q: "What are break and continue statements?",
+          topic: "Digər",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 475,
+          q: "What are js labels?",
+          topic: "Digər",
+          star: false,
+          prob: 10,
+        },
+        {
+          num: 476,
+          q: "What are the two types of loops in JavaScript?",
+          topic: "Digər",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 477,
+          q: "What is the output of below for loops?",
+          topic: "Digər",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 478,
+          q: "Is it possible to use expressions in switch cases?",
+          topic: "Digər",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 479,
+          q: "What are the purpose of switch-case?",
+          topic: "Digər",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 480,
+          q: "What are the conventions to be followed for the usage of switch case?",
+          topic: "Digər",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 481,
+          q: "What are the benefits of keeping declarations at the top? (II)",
+          topic: "Digər",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 482,
+          q: "Why do you need to avoid with statement?",
+          topic: "Digər",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 483,
+          q: "What is an object iterable in JavaScript?",
+          topic: "Digər",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 484,
+          q: "Does JavaScript support namespace?",
+          topic: "Digər",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 485,
+          q: "How do you declare namespace?",
+          topic: "Digər",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 486,
+          q: "How do you invoke JavaScript code in an iframe from parent page?",
+          topic: "Digər",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 487,
+          q: "How do you load CSS and JS files dynamically?",
+          topic: "Digər",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 488,
+          q: "How do you submit a form using JavaScript?",
+          topic: "Digər",
+          star: false,
+          prob: 25,
+        },
+        {
+          num: 489,
+          q: "How do you perform form validation using JavaScript?",
+          topic: "Digər",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 490,
+          q: "What are the DOM methods available for constraint validation?",
+          topic: "Digər",
+          star: false,
+          prob: 20,
+        },
+        {
+          num: 491,
+          q: "What are the available constraint validation DOM properties?",
+          topic: "Digər",
+          star: false,
+          prob: 15,
+        },
+        {
+          num: 492,
+          q: "What is the output of prepend additive operator on falsy values?",
+          topic: "Digər",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 493,
+          q: "What happens with negating an array?",
+          topic: "Digər",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 494,
+          q: "What happens if we add two arrays?",
+          topic: "Digər",
+          star: false,
+          prob: 35,
+        },
+        {
+          num: 495,
+          q: "What is the difference between a parameter and an argument?",
+          topic: "Digər",
+          star: false,
+          prob: 40,
+        },
+        {
+          num: 496,
+          q: "How do you verify that an argument is a Number or not?",
+          topic: "Digər",
+          star: false,
+          prob: 30,
+        },
+        {
+          num: 497,
+          q: "What is the Symbol type in JavaScript?",
+          topic: "Digər",
+          star: true,
+          prob: 50,
+        },
+        {
+          num: 498,
+          q: "What is the difference between structuredClone() and JSON.parse(JSON.stringify())?",
+          topic: "Digər",
+          star: true,
+          prob: 60,
+        },
+        {
+          num: 499,
+          q: "What is the globalThis object?",
+          topic: "Digər",
+          star: true,
+          prob: 40,
+        },
+      ];
+
+      // State
+      let currentFilter = "all";
+      let currentSearch = "";
+      let currentSort = "prob";
+
+      function getProbClass(p) {
+        if (p >= 75) return "prob-critical";
+        if (p >= 55) return "prob-high";
+        if (p >= 40) return "prob-medium";
+        return "prob-low";
+      }
+
+      function getFiltered() {
+        let list = [...questions];
+
+        // filter
+        if (currentFilter === "star") list = list.filter((q) => q.star);
+        else if (currentFilter !== "all") {
+          const min = parseInt(currentFilter);
+          list = list.filter((q) => q.prob >= min);
+        }
+
+        // search
+        if (currentSearch) {
+          const s = currentSearch.toLowerCase();
+          list = list.filter(
+            (q) =>
+              q.q.toLowerCase().includes(s) ||
+              q.topic.toLowerCase().includes(s),
+          );
+        }
+
+        // sort
+        if (currentSort === "prob") list.sort((a, b) => b.prob - a.prob);
+        else if (currentSort === "num") list.sort((a, b) => a.num - b.num);
+        else if (currentSort === "topic")
+          list.sort(
+            (a, b) => a.topic.localeCompare(b.topic) || b.prob - a.prob,
+          );
+
+        return list;
+      }
+
+      function render() {
+        const list = getFiltered();
+        const container = document.getElementById("container");
+        const noRes = document.getElementById("no-results");
+
+        if (list.length === 0) {
+          container.innerHTML = "";
+          noRes.classList.add("show");
+          document.getElementById("shown-count").textContent = 0;
+          return;
+        }
+        noRes.classList.remove("show");
+
+        // Group by topic if sort=topic, else flat
+        let grouped = {};
+        if (currentSort === "topic") {
+          list.forEach((q) => {
+            if (!grouped[q.topic]) grouped[q.topic] = [];
+            grouped[q.topic].push(q);
+          });
+        } else {
+          // group by prob tier
+          const tiers = [
+            { key: "critical", label: "Mütləq bil — ≥75%", min: 75 },
+            { key: "high", label: "Çox gəlir — 55–74%", min: 55 },
+            { key: "medium", label: "Gəlir — 40–54%", min: 40 },
+            { key: "low", label: "Zəif ehtimal — <40%", min: 0 },
+          ];
+          tiers.forEach((t) => {
+            const items = list.filter(
+              (q) =>
+                q.prob >= t.min &&
+                (t.min === 0
+                  ? q.prob < 40
+                  : q.prob >= t.min &&
+                    q.prob < (t.min === 75 ? 101 : t.min === 55 ? 75 : 55)),
+            );
+            if (items.length) grouped[t.label] = items;
+          });
+        }
+
+        let html = "";
+        Object.entries(grouped).forEach(([title, items]) => {
+          html += `
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <span class="section-title">${title}</span>
+          <span class="section-line"></span>
+          <span class="section-count">${items.length} sual</span>
+          <span class="section-toggle">▼</span>
+        </div>
+        <div class="q-grid">
+    `;
+          items.forEach((q) => {
+            html += `
+        <div class="q-row">
+          <span class="q-num">#${q.num}</span>
+          <span class="q-text">${q.q}</span>
+          ${q.star ? '<span class="q-star">★</span>' : ""}
+          <span class="q-prob ${getProbClass(q.prob)}">${q.prob}%</span>
+        </div>
+      `;
+          });
+          html += `</div></div>`;
+        });
+
+        container.innerHTML = html;
+        document.getElementById("shown-count").textContent = list.length;
+      }
+
+      function toggleSection(header) {
+        const grid = header.nextElementSibling;
+        const toggle = header.querySelector(".section-toggle");
+        grid.classList.toggle("collapsed");
+        toggle.classList.toggle("collapsed");
+      }
+
+      // Stats
+      const total = questions.length;
+      const highCount = questions.filter((q) => q.prob >= 40).length;
+      document.getElementById("total-count").textContent = total;
+      document.getElementById("high-count").textContent = highCount;
+
+      // Filter buttons
+      document.querySelectorAll(".btn-filter").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".btn-filter")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentFilter = btn.dataset.filter;
+          render();
+        });
+      });
+
+      // Search
+      document.getElementById("search").addEventListener("input", (e) => {
+        currentSearch = e.target.value.trim();
+        render();
+      });
+
+      // Sort
+      document.getElementById("sort-select").addEventListener("change", (e) => {
+        currentSort = e.target.value;
+        render();
+      });
+
+      render();
+    </script>
+  </body>
+</html>
